@@ -13,13 +13,12 @@ const authenticateToken = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
     // Check if user still exists and get their role
-    const userQueries = [
-      query('SELECT id, email, role FROM admin WHERE id = $1 AND EXISTS (SELECT 1 FROM admin WHERE id = $1)', [decoded.userId]),
-      query('SELECT id, email, 'teacher' as role FROM teachers WHERE id = $1', [decoded.userId]),
-      query('SELECT id, email, 'mentor' as role FROM mentors WHERE id = $1', [decoded.userId]),
-      query('SELECT id, email, 'student' as role FROM students WHERE id = $1', [decoded.userId])
-    ];
-
+const userQueries = [
+  query("SELECT id, email, role FROM admin WHERE id = $1 AND EXISTS (SELECT 1 FROM admin WHERE id = $1)", [decoded.userId]),
+  query("SELECT id, email, 'teacher' as role FROM teachers WHERE id = $1", [decoded.userId]),
+  query("SELECT id, email, 'mentor' as role FROM mentors WHERE id = $1", [decoded.userId]),
+  query("SELECT id, email, 'student' as role FROM students WHERE id = $1", [decoded.userId])
+];
     const results = await Promise.all(userQueries);
     const user = results.find(result => result.rows.length > 0);
     
