@@ -9,14 +9,12 @@ app.use(cors());
 app.use(express.json());
 
 const pool = new Pool({
-    user: 'postgres',
-    host: 'schoolmentorship.ctm44wy40k1z.eu-north-1.rds.amazonaws.com',
-    database: 'SchoolManagement',
-    password: 'MazibukoKhoza',
-    port: 5432,
-    ssl: {
-        rejectUnauthorized: false
-    },
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+    ssl: { rejectUnauthorized: false },
     connectionTimeoutMillis: 10000,
     idleTimeoutMillis: 30000,
     max: 20
@@ -492,5 +490,5 @@ app.get('/health', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
-    
+
 });
