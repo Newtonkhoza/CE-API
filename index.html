@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-8">School Management System</h1>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+            <button onclick="showSection('schools')" class="bg-blue-500 text-white p-3 rounded hover:bg-blue-600">Schools</button>
+            <button onclick="showSection('groups')" class="bg-green-500 text-white p-3 rounded hover:bg-green-600">Groups</button>
+            <button onclick="showSection('students')" class="bg-red-500 text-white p-3 rounded hover:bg-red-600">Students</button>
+            <button onclick="showSection('teachers')" class="bg-purple-500 text-white p-3 rounded hover:bg-purple-600">Teachers</button>
+            <button onclick="showSection('mentors')" class="bg-yellow-500 text-white p-3 rounded hover:bg-yellow-600">Mentors</button>
+            <button onclick="showSection('subjects')" class="bg-indigo-500 text-white p-3 rounded hover:bg-indigo-600">Subjects</button>
+            <button onclick="showSection('resources')" class="bg-pink-500 text-white p-3 rounded hover:bg-pink-600">Resources</button>
+            <button onclick="showSection('sessions')" class="bg-teal-500 text-white p-3 rounded hover:bg-teal-600">Sessions</button>
+        </div>
+
+        <div id="schools-section" class="section">
+            <h2 class="text-2xl font-bold mb-4">Schools</h2>
+            <button onclick="showForm('school')" class="bg-blue-500 text-white p-2 rounded mb-4">Add School</button>
+            <div id="school-form" class="hidden bg-white p-4 rounded shadow mb-4">
+                <input type="text" id="school-name" placeholder="Name" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="school-province" placeholder="Province" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="school-district" placeholder="District" class="border p-2 rounded w-full mb-2">
+                <button onclick="createSchool()" class="bg-green-500 text-white p-2 rounded">Create</button>
+                <button onclick="hideForm('school')" class="bg-gray-500 text-white p-2 rounded ml-2">Cancel</button>
+            </div>
+            <div id="schools-list" class="bg-white rounded shadow"></div>
+        </div>
+
+        <div id="groups-section" class="section hidden">
+            <h2 class="text-2xl font-bold mb-4">Groups</h2>
+            <button onclick="showForm('group')" class="bg-green-500 text-white p-2 rounded mb-4">Add Group</button>
+            <div id="group-form" class="hidden bg-white p-4 rounded shadow mb-4">
+                <input type="text" id="group-name" placeholder="Name" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="group-number" placeholder="Number" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="group-description" placeholder="Description" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="group-school" placeholder="School ID" class="border p-2 rounded w-full mb-2">
+                <button onclick="createGroup()" class="bg-green-500 text-white p-2 rounded">Create</button>
+                <button onclick="hideForm('group')" class="bg-gray-500 text-white p-2 rounded ml-2">Cancel</button>
+            </div>
+            <div id="groups-list" class="bg-white rounded shadow"></div>
+        </div>
+
+        <div id="students-section" class="section hidden">
+            <h2 class="text-2xl font-bold mb-4">Students</h2>
+            <button onclick="showForm('student')" class="bg-red-500 text-white p-2 rounded mb-4">Add Student</button>
+            <div id="student-form" class="hidden bg-white p-4 rounded shadow mb-4">
+                <input type="text" id="student-name" placeholder="Name" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="student-surname" placeholder="Surname" class="border p-2 rounded w-full mb-2">
+                <input type="email" id="student-email" placeholder="Email" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="student-grade" placeholder="Grade" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="student-id_num" placeholder="ID Number" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="student-province" placeholder="Province" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="student-address" placeholder="Address" class="border p-2 rounded w-full mb-2">
+                <input type="password" id="student-password" placeholder="Password" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="student-group_id" placeholder="Group ID" class="border p-2 rounded w-full mb-2">
+                <button onclick="createStudent()" class="bg-green-500 text-white p-2 rounded">Create</button>
+                <button onclick="hideForm('student')" class="bg-gray-500 text-white p-2 rounded ml-2">Cancel</button>
+            </div>
+            <div id="students-list" class="bg-white rounded shadow"></div>
+        </div>
+
+        <div id="teachers-section" class="section hidden">
+            <h2 class="text-2xl font-bold mb-4">Teachers</h2>
+            <button onclick="showForm('teacher')" class="bg-purple-500 text-white p-2 rounded mb-4">Add Teacher</button>
+            <div id="teacher-form" class="hidden bg-white p-4 rounded shadow mb-4">
+                <input type="text" id="teacher-name" placeholder="Name" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="teacher-surname" placeholder="Surname" class="border p-2 rounded w-full mb-2">
+                <input type="email" id="teacher-email" placeholder="Email" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="teacher-id_num" placeholder="ID Number" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="teacher-province" placeholder="Province" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="teacher-address" placeholder="Address" class="border p-2 rounded w-full mb-2">
+                <input type="password" id="teacher-password" placeholder="Password" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="teacher-salary" placeholder="Salary" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="teacher-group_id" placeholder="Group ID" class="border p-2 rounded w-full mb-2">
+                <button onclick="createTeacher()" class="bg-green-500 text-white p-2 rounded">Create</button>
+                <button onclick="hideForm('teacher')" class="bg-gray-500 text-white p-2 rounded ml-2">Cancel</button>
+            </div>
+            <div id="teachers-list" class="bg-white rounded shadow"></div>
+        </div>
+
+        <div id="mentors-section" class="section hidden">
+            <h2 class="text-2xl font-bold mb-4">Mentors</h2>
+            <button onclick="showForm('mentor')" class="bg-yellow-500 text-white p-2 rounded mb-4">Add Mentor</button>
+            <div id="mentor-form" class="hidden bg-white p-4 rounded shadow mb-4">
+                <input type="text" id="mentor-name" placeholder="Name" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="mentor-surname" placeholder="Surname" class="border p-2 rounded w-full mb-2">
+                <input type="email" id="mentor-email" placeholder="Email" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="mentor-id_num" placeholder="ID Number" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="mentor-province" placeholder="Province" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="mentor-address" placeholder="Address" class="border p-2 rounded w-full mb-2">
+                <input type="password" id="mentor-password" placeholder="Password" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="mentor-incentives" placeholder="Incentives" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="mentor-group_id" placeholder="Group ID" class="border p-2 rounded w-full mb-2">
+                <button onclick="createMentor()" class="bg-green-500 text-white p-2 rounded">Create</button>
+                <button onclick="hideForm('mentor')" class="bg-gray-500 text-white p-2 rounded ml-2">Cancel</button>
+            </div>
+            <div id="mentors-list" class="bg-white rounded shadow"></div>
+        </div>
+
+        <div id="subjects-section" class="section hidden">
+            <h2 class="text-2xl font-bold mb-4">Subjects</h2>
+            <button onclick="showForm('subject')" class="bg-indigo-500 text-white p-2 rounded mb-4">Add Subject</button>
+            <div id="subject-form" class="hidden bg-white p-4 rounded shadow mb-4">
+                <input type="text" id="subject-name" placeholder="Name" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="subject-description" placeholder="Description" class="border p-2 rounded w-full mb-2">
+                <button onclick="createSubject()" class="bg-green-500 text-white p-2 rounded">Create</button>
+                <button onclick="hideForm('subject')" class="bg-gray-500 text-white p-2 rounded ml-2">Cancel</button>
+            </div>
+            <div id="subjects-list" class="bg-white rounded shadow"></div>
+        </div>
+
+        <div id="resources-section" class="section hidden">
+            <h2 class="text-2xl font-bold mb-4">Resources</h2>
+            <button onclick="showForm('resource')" class="bg-pink-500 text-white p-2 rounded mb-4">Add Resource</button>
+            <div id="resource-form" class="hidden bg-white p-4 rounded shadow mb-4">
+                <input type="number" id="resource-upload_by" placeholder="Upload By ID" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="resource-subject" placeholder="Subject ID" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="resource-type" placeholder="Type" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="resource-name" placeholder="Name" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="resource-description" placeholder="Description" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="resource-file_path" placeholder="File Path" class="border p-2 rounded w-full mb-2">
+                <button onclick="createResource()" class="bg-green-500 text-white p-2 rounded">Create</button>
+                <button onclick="hideForm('resource')" class="bg-gray-500 text-white p-2 rounded ml-2">Cancel</button>
+            </div>
+            <div id="resources-list" class="bg-white rounded shadow"></div>
+        </div>
+
+        <div id="sessions-section" class="section hidden">
+            <h2 class="text-2xl font-bold mb-4">Sessions</h2>
+            <button onclick="showForm('session')" class="bg-teal-500 text-white p-2 rounded mb-4">Add Session</button>
+            <div id="session-form" class="hidden bg-white p-4 rounded shadow mb-4">
+                <input type="number" id="session-hoster" placeholder="Hoster ID" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="session-capacity" placeholder="Capacity" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="session-name" placeholder="Name" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="session-subject" placeholder="Subject ID" class="border p-2 rounded w-full mb-2">
+                <input type="text" id="session-description" placeholder="Description" class="border p-2 rounded w-full mb-2">
+                <input type="number" id="session-duration" placeholder="Duration (minutes)" class="border p-2 rounded w-full mb-2">
+                <input type="datetime-local" id="session-start_time" class="border p-2 rounded w-full mb-2">
+                <button onclick="createSession()" class="bg-green-500 text-white p-2 rounded">Create</button>
+                <button onclick="hideForm('session')" class="bg-gray-500 text-white p-2 rounded ml-2">Cancel</button>
+            </div>
+            <div id="sessions-list" class="bg-white rounded shadow"></div>
+        </div>
+
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000';
+        
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`${section}-section`).classList.remove('hidden');
+            loadData(section);
+        }
+
+        function showForm(type) {
+            document.getElementById(`${type}-form`).classList.remove('hidden');
+        }
+
+        function hideForm(type) {
+            document.getElementById(`${type}-form`).classList.add('hidden');
+            clearForm(type);
+        }
+
+        function clearForm(type) {
+            const form = document.getElementById(`${type}-form`);
+            form.querySelectorAll('input').forEach(input => input.value = '');
+        }
+
+        async function loadData(type) {
+            try {
+                const response = await fetch(`${API_URL}/${type}`);
+                const data = await response.json();
+                displayData(type, data);
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        function displayData(type, data) {
+            const container = document.getElementById(`${type}-list`);
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p class="p-4 text-gray-500">No data found</p>';
+                return;
+            }
+
+            const headers = Object.keys(data[0]);
+            let html = `
+                <table class="w-full">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            ${headers.map(header => `<th class="p-2 text-left">${header}</th>`).join('')}
+                            <th class="p-2 text-left">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach(item => {
+                html += `
+                    <tr class="border-b">
+                        ${headers.map(header => `<td class="p-2">${item[header]}</td>`).join('')}
+                        <td class="p-2">
+                            <button onclick="deleteItem('${type}', ${item.id})" class="bg-red-500 text-white p-1 rounded text-sm">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        async function createSchool() {
+            const data = {
+                name: document.getElementById('school-name').value,
+                province: document.getElementById('school-province').value,
+                district: document.getElementById('school-district').value
+            };
+            await createItem('schools', data);
+        }
+
+        async function createGroup() {
+            const data = {
+                name: document.getElementById('group-name').value,
+                number: parseInt(document.getElementById('group-number').value),
+                description: document.getElementById('group-description').value,
+                school: parseInt(document.getElementById('group-school').value)
+            };
+            await createItem('groups', data);
+        }
+
+        async function createStudent() {
+            const data = {
+                name: document.getElementById('student-name').value,
+                surname: document.getElementById('student-surname').value,
+                email: document.getElementById('student-email').value,
+                grade: parseInt(document.getElementById('student-grade').value),
+                id_num: document.getElementById('student-id_num').value,
+                province: document.getElementById('student-province').value,
+                address: document.getElementById('student-address').value,
+                password: document.getElementById('student-password').value,
+                group_id: document.getElementById('student-group_id').value ? parseInt(document.getElementById('student-group_id').value) : null
+            };
+            await createItem('students', data);
+        }
+
+        async function createTeacher() {
+            const data = {
+                name: document.getElementById('teacher-name').value,
+                surname: document.getElementById('teacher-surname').value,
+                email: document.getElementById('teacher-email').value,
+                id_num: document.getElementById('teacher-id_num').value,
+                province: document.getElementById('teacher-province').value,
+                address: document.getElementById('teacher-address').value,
+                password: document.getElementById('teacher-password').value,
+                salary: parseFloat(document.getElementById('teacher-salary').value),
+                group_id: document.getElementById('teacher-group_id').value ? parseInt(document.getElementById('teacher-group_id').value) : null
+            };
+            await createItem('teachers', data);
+        }
+
+        async function createMentor() {
+            const data = {
+                name: document.getElementById('mentor-name').value,
+                surname: document.getElementById('mentor-surname').value,
+                email: document.getElementById('mentor-email').value,
+                id_num: document.getElementById('mentor-id_num').value,
+                province: document.getElementById('mentor-province').value,
+                address: document.getElementById('mentor-address').value,
+                password: document.getElementById('mentor-password').value,
+                incentives: parseFloat(document.getElementById('mentor-incentives').value),
+                group_id: document.getElementById('mentor-group_id').value ? parseInt(document.getElementById('mentor-group_id').value) : null
+            };
+            await createItem('mentors', data);
+        }
+
+        async function createSubject() {
+            const data = {
+                name: document.getElementById('subject-name').value,
+                description: document.getElementById('subject-description').value
+            };
+            await createItem('subjects', data);
+        }
+
+        async function createResource() {
+            const data = {
+                upload_by: parseInt(document.getElementById('resource-upload_by').value),
+                subject: parseInt(document.getElementById('resource-subject').value),
+                type: document.getElementById('resource-type').value,
+                name: document.getElementById('resource-name').value,
+                description: document.getElementById('resource-description').value,
+                file_path: document.getElementById('resource-file_path').value
+            };
+            await createItem('resources', data);
+        }
+
+        async function createSession() {
+            const data = {
+                hoster: parseInt(document.getElementById('session-hoster').value),
+                capacity: parseInt(document.getElementById('session-capacity').value),
+                name: document.getElementById('session-name').value,
+                subject: parseInt(document.getElementById('session-subject').value),
+                description: document.getElementById('session-description').value,
+                duration: parseInt(document.getElementById('session-duration').value),
+                start_time: document.getElementById('session-start_time').value
+            };
+            await createItem('sessions', data);
+        }
+
+        async function createItem(type, data) {
+            try {
+                const response = await fetch(`${API_URL}/${type}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    hideForm(type.slice(0, -1));
+                    loadData(type);
+                    clearForm(type.slice(0, -1));
+                }
+            } catch (error) {
+                console.error('Error creating item:', error);
+            }
+        }
+
+        async function deleteItem(type, id) {
+            if (confirm('Are you sure you want to delete this item?')) {
+                try {
+                    const response = await fetch(`${API_URL}/${type}/${id}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        loadData(type);
+                    }
+                } catch (error) {
+                    console.error('Error deleting item:', error);
+                }
+            }
+        }
+
+        showSection('schools');
+    </script>
+</body>
+</html>
